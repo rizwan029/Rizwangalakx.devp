@@ -1,28 +1,39 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, Code, Globe } from 'lucide-react';
+import { ArrowUpRight, Code, Globe, ExternalLink } from 'lucide-react';
+
+// Import project images
+import projectEcommerce from '@/assets/project-ecommerce.jpg';
+import projectPortfolio from '@/assets/project-portfolio.jpg';
+import projectDashboard from '@/assets/project-dashboard.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
     title: 'E-Commerce Platform',
-    description: 'A modern e-commerce solution with seamless UX and stunning animations.',
+    description: 'A modern e-commerce solution with seamless UX, stunning animations, and a sleek shopping cart interface.',
     tags: ['React', 'GSAP', 'Tailwind'],
-    color: 'from-primary/20 to-accent/20',
+    image: projectEcommerce,
+    liveUrl: 'https://example-ecommerce.com',
+    codeUrl: 'https://github.com/rizwan/ecommerce-platform',
   },
   {
     title: '3D Portfolio',
-    description: 'Interactive 3D portfolio showcasing creative web experiences.',
+    description: 'Interactive 3D portfolio with floating orbs, immersive hero section, and creative web experiences.',
     tags: ['Three.js', 'React', 'Spline'],
-    color: 'from-accent/20 to-primary/20',
+    image: projectPortfolio,
+    liveUrl: 'https://example-portfolio.com',
+    codeUrl: 'https://github.com/rizwan/3d-portfolio',
   },
   {
     title: 'SaaS Dashboard',
-    description: 'Analytics dashboard with real-time data visualization.',
+    description: 'Analytics dashboard with real-time data visualization, charts, and professional business interface.',
     tags: ['React', 'D3.js', 'TypeScript'],
-    color: 'from-primary/20 to-secondary/40',
+    image: projectDashboard,
+    liveUrl: 'https://example-dashboard.com',
+    codeUrl: 'https://github.com/rizwan/saas-dashboard',
   },
 ];
 
@@ -91,35 +102,42 @@ const ProjectsSection = () => {
 
         {/* Projects grid */}
         <div className="projects-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <article
               key={project.title}
-              className={`project-card glass-card group relative overflow-hidden cursor-pointer`}
+              className="project-card glass-card group relative overflow-hidden"
             >
-              {/* Project image placeholder */}
-              <div
-                className={`h-48 md:h-56 bg-gradient-to-br ${project.color} relative overflow-hidden`}
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Code
-                    size={60}
-                    className="text-primary/30 group-hover:text-primary/50 transition-colors duration-500"
-                  />
-                </div>
+              {/* Project image */}
+              <div className="h-48 md:h-56 relative overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
                 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent opacity-60" />
                 
-                {/* View button */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                  <div className="flex items-center gap-4">
-                    <button className="p-3 rounded-full bg-background/90 backdrop-blur-sm border border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-                      <Globe size={20} />
-                    </button>
-                    <button className="p-3 rounded-full bg-background/90 backdrop-blur-sm border border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
-                      <Code size={20} />
-                    </button>
-                  </div>
+                {/* Hover overlay with buttons */}
+                <div className="absolute inset-0 bg-primary/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-background/90 backdrop-blur-sm border border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+                    aria-label="View live demo"
+                  >
+                    <Globe size={20} />
+                  </a>
+                  <a
+                    href={project.codeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 rounded-full bg-background/90 backdrop-blur-sm border border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+                    aria-label="View source code"
+                  >
+                    <Code size={20} />
+                  </a>
                 </div>
               </div>
 
@@ -140,7 +158,7 @@ const ProjectsSection = () => {
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
@@ -150,9 +168,44 @@ const ProjectsSection = () => {
                     </span>
                   ))}
                 </div>
+
+                {/* Links */}
+                <div className="flex gap-4 pt-2 border-t border-border/30">
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors duration-300"
+                  >
+                    <ExternalLink size={14} />
+                    Live Demo
+                  </a>
+                  <a
+                    href={project.codeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors duration-300"
+                  >
+                    <Code size={14} />
+                    Source Code
+                  </a>
+                </div>
               </div>
             </article>
           ))}
+        </div>
+
+        {/* View more button */}
+        <div className="text-center mt-12">
+          <a
+            href="https://github.com/rizwan"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-glow inline-flex items-center gap-2"
+          >
+            View All Projects
+            <ArrowUpRight size={18} />
+          </a>
         </div>
       </div>
 
